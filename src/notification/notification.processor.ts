@@ -8,7 +8,7 @@ export class NotificationProcessor {
   constructor(private readonly notificationService: NotificationService) {}
 
   @Process('sendNotification')
-  async handleSendNotification(job: Job<UserDTO>) {
+  async handleSendNotification(job: Job<{ eventId: string, data: UserDTO }>) {
     await this.notificationService.sendNotification(job.data);
   }
 }

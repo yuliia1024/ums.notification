@@ -5,12 +5,27 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { NotificationService } from './notification/notification.service';
 import { BullModule } from '@nestjs/bull';
 import { NotificationProcessor } from './notification/notification.processor';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Notification } from './notification/notification.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        type: 'postgres',
+        url: configService.get<string>('PG_URL'),
+        username: configService.get<string>('DATABASE_USER'),
+        password: configService.get<string>('DATABASE_PASSWORD'),
+        autoLoadEntities: true,
+        synchronize: true,
+      }),
+      inject: [ConfigService],
+    }),
+    TypeOrmModule.forFeature([Notification]),
     RabbitMQModule.forRootAsync(RabbitMQModule, {
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
