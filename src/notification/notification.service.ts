@@ -35,7 +35,7 @@ export class NotificationService {
     this.logger.log(`Received message: ${JSON.stringify(dto)}`);
 
     const sendTime = new Date(dto.data.createdAt);
-    sendTime.setMinutes(sendTime.getMinutes() + 1);
+    sendTime.setMinutes(sendTime.getHours() + 24);
 
     await this.notificationQueue.add(
       'sendNotification',
