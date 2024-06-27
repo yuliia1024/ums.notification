@@ -9,7 +9,7 @@ import { UserDTO } from '../types/user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import * as moment from 'moment/moment';
-import { Notification } from './notification.entity';
+import { Notification } from '../shared/entities/notification.entity';
 
 @Injectable()
 export class NotificationService {
