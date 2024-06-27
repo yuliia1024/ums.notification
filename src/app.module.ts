@@ -6,7 +6,7 @@ import { NotificationService } from './notification/notification.service';
 import { BullModule } from '@nestjs/bull';
 import { NotificationProcessor } from './notification/notification.processor';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Notification } from './notification/notification.entity';
+import { Notification } from './shared/entities/notification.entity';
 
 @Module({
   imports: [
@@ -22,6 +22,7 @@ import { Notification } from './notification/notification.entity';
         password: configService.get<string>('DATABASE_PASSWORD'),
         autoLoadEntities: true,
         synchronize: true,
+        entities: [Notification],
       }),
       inject: [ConfigService],
     }),
